@@ -44,27 +44,20 @@ def get_chromedriver(use_proxy=False, user_agent=None):
 driver = get_chromedriver(use_proxy=True)
 
 driver.get('https://www.nseindia.com')
-#driver.get('https://atomurl.net/myip/')
-#cur_url = driver.current_url
-
-#получаем путь к дом элементу через xpath (для элемента Market data)
-market_data_xpath = "/html/body/header/nav/div[2]/div/div/ul/li[3]/a"
-market_data_hover = driver.find_element(By.XPATH, market_data_xpath)
 
 #создаём экземпляр класса ActionChains (класс из библиотеки выше)
 actions = ActionChains(driver)
+
+#получаем путь к дом элементу через xpath (для элемента Market data)
+market_data_hover = driver.find_element(By.XPATH, '/html/body/header/nav/div[2]/div/div/ul/li[3]/a')
 
 #выполняем действие наводения курсора на элемент
 actions.move_to_element(market_data_hover).perform()
 time.sleep(2.37)
 
-#получаем путь к элементу Pre-Open Market
-pre_open_market_xpath = "/html/body/header/nav/div[2]/div/div/ul/li[3]/div/div[1]/div/div[1]/ul/li[1]/a"
-pre_open_market_click = driver.find_element(By.XPATH, pre_open_market_xpath)
-
-#кликаем по элементу Pre-Open Market
-actions.move_to_element(pre_open_market_click).click().perform()
-time.sleep(8.29)
+#получаем путь к элементу Pre-Open Market и кликаем
+pre_open_market_click = driver.find_element(By.XPATH, '/html/body/header/nav/div[2]/div/div/ul/li[3]/div/div[1]/div/div[1]/ul/li[1]/a').click()
+time.sleep(7.29)
 
 #Парсим таблицу
 rows = driver.find_elements(By.XPATH, '//*[@id="livePreTable"]/tbody/tr')
@@ -87,39 +80,31 @@ driver.get('https://www.nseindia.com')
 #html = driver.find_element(By.TAG_NAME, 'html')
 #for i in range(10):
 #    html.send_keys(Keys.DOWN)
-graph_xpath = driver.find_element(By.XPATH, '//*[@id="highcharts-05iem9s-810"]')
-driver.execute_script("arguments[0].scrollIntoView(true);", graph_xpath)
+time.sleep(9.25)
+graph_xpath = driver.find_element(By.XPATH, '//*[@id="tab1_container"]')
+#driver.execute_script("arguments[0].scrollIntoView(True);", graph_xpath)
+actions.move_to_element(graph_xpath).perform()
 
 #выбираем график NIFTY BANK
-nifty_bank_xpath = '//*[@id="tabList_NIFTYBANK"]'
-nifty_bank_click = driver.find_element(By.XPATH, nifty_bank_xpath)
-
-actions.move_to_element(nifty_bank_click).click().perform()
-time.sleep(2.13)
+driver.find_element(By.XPATH, '//*[@id="tabList_NIFTYBANK"]').click()
+time.sleep(1.53)
 
 #нажимаем view all
-view_all_xpath = '//*[@id="tab4_gainers_loosers"]/div[3]/a'
-view_all_click = driver.find_element(By.XPATH, view_all_xpath)
-
-actions.move_to_element(view_all_click).click().perform()
+view_all_xpath = driver.find_element(By.XPATH, '//*[@id="tab4_gainers_loosers"]/div[3]/a')
+#driver.execute_script("arguments[0].scrollIntoView(True);", view_all_xpath)
+actions.move_to_element(view_all_xpath).click().perform()
 time.sleep(7.42)
 
 #выбираем в списке NIFTY ALPHA 50
-nifty_bank_list_xpath = '//*[@id="equitieStockSelect"]'
-nifty_bank_list_click = driver.find_element(By.XPATH, nifty_bank_list_xpath)
+driver.find_element(By.XPATH, '//*[@id="equitieStockSelect"]').click()
 time.sleep(1.91)
 
-actions.move_to_element(nifty_bank_list_click).click().perform()
-
-nifty_alpha_50_xpath = '//*[@id="equitieStockSelect"]/optgroup[4]/option[7]'
-nifty_alpha_50_click = driver.find_element(By.XPATH, nifty_alpha_50_xpath)
-
-actions.move_to_element(nifty_alpha_50_click).click().perform()
-time.sleep(2.09)
+nifty_alpha_50_click = driver.find_element(By.XPATH, '//*[@id="equitieStockSelect"]/optgroup[4]/option[7]').click()
+time.sleep(1.59)
 
 #Прокручиваем таблицу вниз
 nifty_alpha_50_table_xpath = driver.find_element(By.XPATH, '//*[@id="equityStockTable"]')
 driver.execute_script("window.scrollTo(0, document.body.scrollHeight);", nifty_alpha_50_table_xpath)
-
+time.sleep(1.50)
 
 driver.quit()
