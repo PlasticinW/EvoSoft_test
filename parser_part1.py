@@ -46,7 +46,7 @@ def get_csv_data():
     time.sleep(2.37)
 
     #получаем путь к элементу Pre-Open Market и кликаем
-    pre_open_market_click = driver.find_element(By.XPATH, '/html/body/header/nav/div[2]/div/div/ul/li[3]/div/div[1]/div/div[1]/ul/li[1]/a').click()
+    driver.find_element(By.XPATH, '/html/body/header/nav/div[2]/div/div/ul/li[3]/div/div[1]/div/div[1]/ul/li[1]/a').click()
     time.sleep(7.29)
 
     #Парсим таблицу
@@ -66,10 +66,6 @@ def some_actions():
     #Заново переходим на главную страницу
     driver.get('https://www.nseindia.com')
 
-    #имитация скроллинга до графика
-    #html = driver.find_element(By.TAG_NAME, 'html')
-    #for i in range(10):
-    #    html.send_keys(Keys.DOWN)
     time.sleep(3.25)
     graph_xpath = driver.find_element(By.XPATH, '//*[@id="tab1_container"]')
     #driver.execute_script("arguments[0].scrollIntoView(True);", graph_xpath)
