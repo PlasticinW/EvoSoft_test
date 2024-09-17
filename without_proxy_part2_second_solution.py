@@ -30,7 +30,7 @@ def scrape_profile(url) -> dict:
 
     # данные на x.com подгружаются динамически, поэтому нужен какой-то браузер вроде selenium или playwright
     with sync_playwright() as pw:
-        browser = pw.chromium.launch(headless=False, proxy={"server": "http://168.81.65.213:8000"})
+        browser = pw.chromium.launch(headless=False)
         context = browser.new_context(viewport={"width": 1920, "height": 1080})
         page = context.new_page()
 
